@@ -8,6 +8,7 @@ const SingleCocktail = () => {
   const [modifiedCocktail, setModifiedCocktail] = useState([]);
   const dispatch = useDispatch();
   const { id } = useParams();
+  
   useEffect(() => {
     dispatch(fetchSingleCocktail({ id }));
   }, [id]);

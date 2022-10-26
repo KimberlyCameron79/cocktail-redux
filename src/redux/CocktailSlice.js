@@ -5,7 +5,7 @@ export const fetchCocktails = createAsyncThunk(
   "cocktails/fetchCocktails",
   async () => {
     return fetch(
-      "https://cocktails3.p.rapidapi.com/search/byname/Vodka%20Martini"
+      "www.thecocktaildb.com/api/json/v1/1/random.php"
     ).then((res) => res.json());
   }
 );
@@ -14,7 +14,7 @@ export const fetchSingleCocktail = createAsyncThunk(
   "cocktails/fetchSingleCocktail",
   async ({ id }) => {
     return fetch(
-      `https://cocktails3.p.rapidapi.com/random=${id}`
+      `www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007${id}`
     ).then((res) => res.json());
   }
 );
@@ -23,7 +23,7 @@ export const fetchSearchCocktail = createAsyncThunk(
   "cocktails/fetchSearchCocktail",
   async ({ searchText }) => {
     return fetch(
-      `https://cocktails3.p.rapidapi.com/search/byingredient/Gin=${searchText}`
+      `www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin ${searchText}`
     ).then((res) => res.json());
   }
 );
@@ -39,6 +39,7 @@ const cocktailSlice = createSlice({
   extraReducers: {
     [fetchCocktails.pending]: (state, action) => {
       state.loading = true;
+      state.cocktails =action.payload;
     },
     [fetchCocktails.fulfilled]: (state, action) => {
       state.loading = false;
@@ -50,6 +51,7 @@ const cocktailSlice = createSlice({
     },
     [fetchSingleCocktail.pending]: (state, action) => {
       state.loading = true;
+      state.cocktail = action.payload;
     },
     [fetchSingleCocktail.fulfilled]: (state, action) => {
       state.loading = false;
@@ -61,6 +63,7 @@ const cocktailSlice = createSlice({
     },
     [fetchSearchCocktail.pending]: (state, action) => {
       state.loading = true;
+      state.searchCocktail = action.payload;
     },
     [fetchSearchCocktail.fulfilled]: (state, action) => {
       state.loading = false;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCocktails } from "../redux/CocktailSlice";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 const CocktailList = () => {
   const { cocktails, loading } = useSelector((state) => ({ ...state.app }));
@@ -9,9 +10,16 @@ const CocktailList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const url = 'https://www.thecocktaildb.com/api/json/v1/1/random.php';
+    axios
+    .get(url)
+    .then((res)=>{
+      console.log(res.dispatch)
+    })
     dispatch(fetchCocktails());
-  }, ['dispatch']);
+  }, []);
 
+ 
   useEffect(() => {
     if (cocktails) {
       const newCocktails = cocktails.map((item) => {

@@ -4,26 +4,32 @@ import Home from './pages/Home';
 import { Route, Routes } from 'react-router-dom';
 import SingleCocktail from './pages/SingleCocktail';
 import REACT_APP_API from '../src/.env';
+import CocktailList from './components/CocktailList';
+// import index from '../public/index.html';
+import Header from './components/Header';
 
-
-// import Header from './components/Header';
-function App() {
-  return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cocktail/:id" element={<SingleCocktail />} />
-      </Routes>
-
-    </div>
-  )
-};
 const options = {
 	method: 'GET',
 	headers: {
 		'X-RapidAPI-Key': 'ff3c86e4cemsh5b9a0c3fcc37e8ap1e11f8jsn43859391059b',
 		'X-RapidAPI-Host': 'the-cocktail-db.p.rapidapi.com'
 	}
+};
+
+
+function App() {
+  return (
+    <div className="App">
+      <Header />
+   
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/cocktail/:id" element={<SingleCocktail />} />
+      </Routes>
+      <CocktailList />
+
+    </div>
+  )
 };
 
 fetch(REACT_APP_API, options)
@@ -40,7 +46,7 @@ let allSearchData = ""; //decleared to collect all search names
 //gets each inputs data starting from second input
 function getResults() {
   //gets value of input
-  let search = element("search-input").value;
+  let search = element("search-inputForm").value;
   allSearchData = ""; //clears data for each word typed
 
   hideSearchResults();
@@ -102,11 +108,11 @@ function clearSearchData() {
   element("search-data").innerHTML = "";
 }
 //gets results after each input
-element("search-input").oninput = function () {
+element("search-inputForm").oninput = function () {
   getResults();
 };
 
-element("search-input").addEventListener("keyup", function (event) {
+element("search-inputForm").addEventListener("keyup", function (event) {
   // Number 13 is the "Enter" key on the keyboard
   if (KeyboardEvent.charCode === 13) {
     // Cancel the default action, if needed
